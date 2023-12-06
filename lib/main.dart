@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:quizapp/question.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'quizlogic.dart';
 
 void main() {
   runApp(const QuizApp());
 }
+
+QuizLogic quizlogic = QuizLogic();
 
 class QuizApp extends StatelessWidget {
   const QuizApp({super.key});
@@ -26,8 +29,6 @@ class QuizApp extends StatelessWidget {
   }
 }
 
-// This widget is
-//
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
 
@@ -38,18 +39,36 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Widget> scoreKeeper = [];
 
-  List<Question> questionBank = [
-    Question(
-        questiontext: 'You can lead a cow down stairs but not up stairs.',
-        questionAnswer: false),
-    Question(
-        questiontext:
-            'Approximately  one quarter of human bones are in the feet.',
-        questionAnswer: true),
-    Question(questiontext: 'A slug\'s blood is green.', questionAnswer: true)
-  ];
+  void checkAnswer(bool userPickedAnswer) {
+    bool correctanswer = quizlogic.getQuestionAnswer();
 
-  int questionNumber = 0;
+    setState(() {
+      if (quizlogic.isFinished() == true) {
+        _onBasicAlertPressed(context);
+        quizlogic.reset();
+        scoreKeeper = [];
+      } else {
+        if (correctanswer == userPickedAnswer) {
+          scoreKeeper.add(Icon(
+            Icons.check,
+            color: Colors.green,
+          ));
+        } else {
+          scoreKeeper.add(Icon(Icons.close, color: Colors.red));
+        }
+
+        quizlogic.netxtquestion();
+      }
+    });
+  }
+
+  _onBasicAlertPressed(context) {
+    Alert(
+      context: context,
+      title: "Finished the Quiz",
+      desc: "Congrats",
+    ).show();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +82,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10),
             child: Center(
               child: Text(
-                questionBank[questionNumber].questiontext,
+                quizlogic.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 25.0, color: Colors.white),
               ),
@@ -75,14 +94,7 @@ class _QuizPageState extends State<QuizPage> {
           padding: const EdgeInsets.all(15.0),
           child: ElevatedButton(
               onPressed: () {
-                setState(() {
-                  bool correctanswer =
-                      questionBank[questionNumber].questionAnswer;
-
-                  if (correctanswer == true) {}
-
-                  questionNumber++;
-                });
+                checkAnswer(true);
               },
               style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
               child: const Text("true")),
@@ -92,14 +104,7 @@ class _QuizPageState extends State<QuizPage> {
           padding: const EdgeInsets.all(15.0),
           child: ElevatedButton(
               onPressed: () {
-                setState(() {
-                  bool correctanswer =
-                      questionBank[questionNumber].questionAnswer;
-
-                  if (correctanswer == false) {}
-
-                  questionNumber++;
-                });
+                checkAnswer(false);
               },
               style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
               child: const Text("false")),
