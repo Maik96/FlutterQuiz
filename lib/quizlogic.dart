@@ -5,13 +5,50 @@ class QuizLogic {
 
   final List<Question> _questionBank = [
     Question(
-        questiontext: 'You can lead a cow down stairs but not up stairs.',
+        questiontext: 'Flutter uses Dart as its primary programming language',
+        questionAnswer: true),
+    Question(
+        questiontext: 'Dart is a statically typed language only.',
+        questionAnswer: false),
+    Question(
+        questiontext: 'Widgets in Flutter are immutable.',
+        questionAnswer: true),
+    Question(
+        questiontext:
+            'Flutter apps are compiled directly into native machine code',
+        questionAnswer: true),
+    Question(
+        questiontext: 'Dart supports both single and multi-threading.',
+        questionAnswer: true),
+    Question(
+        questiontext:
+            'Hot Reload in Flutter allows developers to see instant changes without restarting the app.',
+        questionAnswer: true),
+    Question(
+        questiontext: 'Flutter widgets can only have a single child.',
         questionAnswer: false),
     Question(
         questiontext:
-            'Approximately  one quarter of human bones are in the feet.',
+            'Dart has built-in garbage collection for memory management.',
         questionAnswer: true),
-    Question(questiontext: 'A slug\'s blood is green.', questionAnswer: true)
+    Question(
+        questiontext:
+            'Dart supports both object-oriented and functional programming paradigms.',
+        questionAnswer: true),
+    Question(
+        questiontext:
+            'Flutter provides platform-specific widgets for Android only.',
+        questionAnswer: false),
+    Question(
+        questiontext: 'Dart is exclusively used for mobile app development.',
+        questionAnswer: false),
+    Question(
+        questiontext:
+            'Flutter\'s codebase can be reused to build web applications.',
+        questionAnswer: true),
+    Question(
+        questiontext: 'Flutter apps can only be developed for iOS devices.',
+        questionAnswer: false),
   ];
 
   void netxtquestion() {
